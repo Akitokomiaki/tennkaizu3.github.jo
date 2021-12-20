@@ -1,0 +1,26 @@
+function AnswerCheck(formp){
+    // 初期化
+    OkColor = "#FFB0B0";    // 正解の色
+    NgColor = "#B0B0FF";    // 不正解の色
+    tensu = 0;    // 点数用
+    seikai_data = "";    // 正解データ作成用
+    if(typeof(formp.HAITEN) == "undefined")    // 配点なし=1点
+        haiten = 1;
+    else
+        haiten = parseInt(formp.HAITEN.value);
+    // 解答チェック
+    for(n = 0; n < formp.KAITO.length; ++n){    // 問題（解答入力欄）数分繰り返す
+        if(formp.KAITO[n].value == formp.KOTAE[n].value){  // 正誤の判定
+            tensu = tensu + haiten;                          // 得点加算
+            formp.KAITO[n].style.backgroundColor = OkColor;  // 正解の色
+        }else
+            formp.KAITO[n].style.backgroundColor = NgColor;  // 不正解の色
+        seikai_data = seikai_data + "(" + (n+1) + ") ";          // 正解データ作成 番号
+        seikai_data = seikai_data + formp.KOTAE[n].value + " ";  // 正解データ作成 正解
+    }
+    // 得点・正解表示
+    if(typeof(formp.TOKUTEN) != "undefined")  // 得点欄あり
+        formp.TOKUTEN.value = tensu;              // 得点表示
+    if(typeof(formp.SEIKAI) != "undefined")   // 正解表示欄あり
+        formp.SEIKAI.value = seikai_data;         // 正解表示
+}
